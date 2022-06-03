@@ -20,18 +20,14 @@ class Service:
         return self.convert_to_dataFrame(Cursor_Tags)
 
     def get_Recommendation_DataFrame(self, query):
-         return  self.convert_to_dataFrame(Database.DATABASE[environement.COLLECTION_RECOMMENDATION].find(query, {"poi":1,"_id":1} ))
+        return self.convert_to_dataFrame(Database.DATABASE[environement.COLLECTION_RECOMMENDATION].find(query, {"poi": 1, "_id": 1}))
 
+    def get_PropretBooking_DataFrame(self, query):
+        return self.convert_to_dataFrame(Database.DATABASE[environement.COLLECTION_PROPRETYBOOKING].find(query,
+                                                                                                         {"propertyId": 1, "adults": 1, "children": 1, "_id": 1, "babies": 1, "doubleBeds": 1, "singleBeds": 1, "sofaBeds": 1, "babyBeds": 1, "startDate": 1}))
 
-    def get_OnLineChek_DataFrame(self, query):
-        return self.convert_to_dataFrame(Database.find(environement.COLLECTION_ONLINECHECK, query))
-
-    def get_PropretBooking_DataFrame(self , query):
-        return self.convert_to_dataFrame(Database.DATABASE[environement.COLLECTION_PROPRETYBOOKING].find(query, \
-                                                        {"propertyId":1,"adults":1,"children":1,"_id":1,"babies":1,"doubleBeds":1,"singleBeds":1,"sofaBeds":1,"babyBeds":1,"startDate":1} ))
-
-    def get_Property_DataFrame(self , query ):
-        return  self.convert_to_dataFrame(Database.DATABASE[environement.COLLECTION_PROPRETY].find(query, {"poi":1,"_id":1} ))
+    def get_Property_DataFrame(self, query):
+        return self.convert_to_dataFrame(Database.DATABASE[environement.COLLECTION_PROPRETY].find(query, {"poi": 1, "_id": 1}))
 
     def get_Country_DataFrame(self, query):
         return self.convert_to_dataFrame(
@@ -40,6 +36,7 @@ class Service:
     def get_Region_DataFrame(self, query):
         return self.convert_to_dataFrame(
             Database.DATABASE[environement.COLLECTION_REGION].find({}))
+
     def get_guestTag(self, query):
         Cursor_Guest_Tag = Database.find(
             environement.COLLECTION_GUEST_TAG, query)
