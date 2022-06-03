@@ -18,7 +18,18 @@ def getProfileRecommendation(ListProfileId, CloseRecommendation):
     ListRecommendationsId = [row['_id']
                              for index, row in CloseRecommendation.iterrows()]
 
-    # get data
+    # get tags util in this region:
+    List_tags_util = []
+    for index, row in CloseRecommendation.iterrows():
+        if ('tagIds' in row.keys()):
+            tagIds = row['tagIds']
+            for tag_id in tagIds:
+                if tag_id not in List_tags_util:
+                    List_tags_util.append(tag_id)
+
+    # get list categorie utile :
+
+        # get data
     DataFrame_Recommendation = CloseRecommendation
     DataFrame_GuestReviewsScore = ServiceData.get_guestReviews({"recommendationId": {
         "$in": ListRecommendationsId}, "guestId": {"$in": ListProfileId}})
@@ -50,6 +61,11 @@ def getProfileRecommendation(ListProfileId, CloseRecommendation):
         RecommendationList.append(DATA)
 
     return RecommendationList
+
+
+# boucle on recommendation :
+# bulde les id of rezcommendation
+# and tableau of tag
 
 
 def get_big_score(LIST_IDs_OF_GUEST_IN_PROFILE_ON_REGION, recommendation_id, DataFrame_GuestReviewsScore, DataFrame_Recommendation, DataFrame_GuestTags, DataFrame_GuestCategorie):
