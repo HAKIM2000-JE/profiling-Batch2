@@ -15,9 +15,11 @@ ServiceData = Service()
 
 if __name__ == "__main__":
 
-    schedule.every().day.at(environement.BATCH_HOUR).do(batch.run)
+    # schedule.every().day.at(environement.BATCH_HOUR).do(batch.run)
 
-    while True:
-        print('STAAART')
-        schedule.run_pending()
-        time.sleep(1000)
+    # while True:
+    #     print('STAAART')
+    #     schedule.run_pending()
+    #     time.sleep(1000)
+    batch.run()
+    print('DONE')

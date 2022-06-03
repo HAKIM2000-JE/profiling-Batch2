@@ -2,7 +2,6 @@ from database import Database
 from bson.objectid import ObjectId
 import pandas as pd
 import environement
-Database.initialize()
 
 
 class Service:
@@ -38,31 +37,12 @@ class Service:
             Database.DATABASE[environement.COLLECTION_REGION].find({}))
 
     def get_guestTag(self, query):
-        Cursor_Guest_Tag = Database.find(
-            environement.COLLECTION_GUEST_TAG, query)
-        list_guest_tag = []
-        for row in Cursor_Guest_Tag:
-            row['guestId'] = row['_id']['guestId']
-            row['tagId'] = row['_id']['tagId']
-            list_guest_tag.append(row)
-        return self.convert_to_dataFrame(list_guest_tag)
+        return self.convert_to_dataFrame(Database.find(
+            environement.COLLECTION_GUEST_TAG, query))
 
     def get_guestCategory(self, query):
-        Cursor_Guest_category = Database.find(
-            environement.COLLECTION_GUEST_CATEGORY, query)
-        list_guest_category = []
-        for row in Cursor_Guest_category:
-            row['guestId'] = row['_id']['guestId']
-            row['category'] = row['_id']['category']
-            list_guest_category.append(row)
-        return self.convert_to_dataFrame(list_guest_category)
+        return self.convert_to_dataFrame(Database.find(environement.COLLECTION_GUEST_CATEGORY, query))
 
     def get_guestReviews(self, query):
-        Cursor_Guest_Reviews = Database.find(
-            environement.COLLECTION_GUEST_REVIEWS, query)
-        list_guest_reviews = []
-        for row in Cursor_Guest_Reviews:
-            row['guestId'] = row['_id']['guestId']
-            row['recommendationId'] = row['_id']['recommendationId']
-            list_guest_reviews.append(row)
-        return self.convert_to_dataFrame(list_guest_reviews)
+        return self.convert_to_dataFrame(Database.find(
+            environement.COLLECTION_GUEST_REVIEWS, query))

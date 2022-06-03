@@ -63,6 +63,7 @@ def getProfileRecommendation(ListProfileId, CloseRecommendation):
         # calcule du score
         DATA['SCORE'] = get_big_score(ListProfileId, recommendation_id, DataFrame_GuestReviewsScore,
                                       DataFrame_Recommendation, DataFrame_GuestTags, DataFrame_GuestCategorie)
+        print(DATA)
         RecommendationList.append(DATA)
 
     return RecommendationList
@@ -144,7 +145,6 @@ def getScore_LIKE_byID(guest_id, recommendation_id, DataFrame_Recommendation):
 
 
 def getScore_TAG_byID(guest_id, recommendation_id, DataFrame_GuestTags, DataFrame_Recommendation):
-    print('Get data is DONE !')
     for index, row_recommendation in DataFrame_Recommendation.iterrows():
         if(str(row_recommendation) == str(recommendation_id)):
             if 'tagIds' in row_recommendation.keys():
@@ -169,7 +169,6 @@ def getScore_CATEGORIE_byID(guest_id, recommendation_id, DataFrame_GuestCategori
                 SCORE_CATEGORIE = 0
                 for index, row_guest_categorie in DataFrame_GuestCategorie.iterrows():
                     if (str(guest_id) == str(row_guest_categorie['guestId'])) and (category == row_guest_categorie['category']):
-                        print('CALCULE DES CATEGORY')
                         SCORE_CATEGORIE = row_guest_categorie['nbClickCategory']
                         return SCORE_CATEGORIE
                 return SCORE_CATEGORIE
