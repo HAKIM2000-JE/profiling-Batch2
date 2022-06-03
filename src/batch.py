@@ -45,12 +45,7 @@ def run():
 
             # Liste des réservations pris dans ces proprietés en passé
             Reservations = ServiceData.get_PropretBooking_DataFrame(
-                {
-                    "propertyId": {"$in": ListPropertyId},
-                    "startDate": {"$lt": datetime.now().strftime("%Y-%m-%d")},
-                    "monthOfStartDate": {"$month": "startDate"},
-                    "removed": False
-                })
+                {"propertyId": {"$in": ListPropertyId}, "startDate": {"$lt": datetime.now().strftime("%Y-%m-%d")}, "removed": False})
 
             FinalProfilesList = []
             if not Reservations.empty:

@@ -13,7 +13,7 @@ ServiceData = Service()
 # get recommendation List of every Profile
 def getProfileRecommendation(ListProfileId, CloseRecommendation):
     List = []
-
+    print('get profiles recommendations')
     # Create list of recommendation
     ListRecommendationsId = [row['_id']
                              for index, row in CloseRecommendation.iterrows()]
@@ -57,7 +57,7 @@ def getProfileRecommendation(ListProfileId, CloseRecommendation):
     for index, recommendation in CloseRecommendation.iterrows():
         recommendation_id = recommendation['_id']
         DATA = {}
-        DATA['Recommendation Id'] = recommendation['_id']
+        DATA['RecommendationId'] = recommendation['_id']
         DATA['poi'] = recommendation['poi']
 
         # calcule du score

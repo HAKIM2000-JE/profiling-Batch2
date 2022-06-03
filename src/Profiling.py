@@ -15,7 +15,7 @@ import pandas as pd
 def getProfiles(df):
 
     cols = ['_id', "adults", "children", "babies", "doubleBeds",
-            "singleBeds", "sofaBeds", "babyBeds", "monthOfStartDate"]
+            "singleBeds", "sofaBeds", "babyBeds", "startDate"]
     df = df[cols]
 
     df['_id'] = df['_id'].apply(
@@ -23,11 +23,11 @@ def getProfiles(df):
 
     encode = LabelEncoder()
     encoded = encode.fit_transform(df.iloc[:, 0])
-    #df['_id'] = encoded
+    df['_id'] = encoded
 
-    # # extraire le mois depuis la date
-    # df['startDate'] = df['startDate'].apply(
-    #     lambda x: pd.datetime.strptime(str(x), '%Y-%m-%d').month if type(x) == str else 1)
+    # extraire le mois depuis la date
+    df['startDate'] = df['startDate'].apply(
+        lambda x: pd.datetime.strptime(str(x), '%Y-%m-%d').month if type(x) == str else 1)
 
     kmeans = KMeans(n_clusters=environement.NBR_CLUSTER).fit(df)
 
@@ -42,8 +42,8 @@ def getProfiles(df):
     for i in np.unique(labels):
         profile_object = {}
         centroids_objects = {}
-        # print("#########################################################")
-        #print(df[labels == i])
+        print("#########################################################")
+        print(df[labels == i])
         encoded_reverse = encode.inverse_transform(df.iloc[:, 0])
 
         centroids_objects['adultsMean'] = centroids[i].tolist()[1]
@@ -53,7 +53,7 @@ def getProfiles(df):
         centroids_objects['singleBedsMean'] = centroids[i].tolist()[5]
         centroids_objects['sofaBedsMean'] = centroids[i].tolist()[6]
         centroids_objects['BabyBedsMean'] = centroids[i].tolist()[7]
-        centroids_objects['monthOfStartDateMean'] = centroids[i].tolist()[8]
+        centroids_objects['startDateMean'] = centroids[i].tolist()[8]
         profile_object['centroids'] = centroids_objects  # centroids[i]
 
         profile_object['propertyBookingsIds'] = [
