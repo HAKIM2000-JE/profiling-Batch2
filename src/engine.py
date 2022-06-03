@@ -20,13 +20,13 @@ def getProfileRecommendation(ListProfileId, CloseRecommendation):
 
     # get data
     DataFrame_Recommendation = CloseRecommendation
-    DataFrame_GuestReviewsScore = ServiceData.get_guestReviews({"_id.recommendationId": {
-        "$in": ListRecommendationsId}, "_id.guestId": {"$in": ListProfileId}})
+    DataFrame_GuestReviewsScore = ServiceData.get_guestReviews({"recommendationId": {
+        "$in": ListRecommendationsId}, "guestId": {"$in": ListProfileId}})
 
     DataFrame_GuestTags = ServiceData.get_guestTag(
-        {"_id.guestId": {"$in": ListProfileId}})
+        {"guestId": {"$in": ListProfileId}})
     DataFrame_GuestCategorie = ServiceData.get_guestCategory(
-        {"_id.guestId": {"$in": ListProfileId}})
+        {"guestId": {"$in": ListProfileId}})
 
     # get score of behvior :
 
@@ -68,7 +68,7 @@ def get_big_score(LIST_IDs_OF_GUEST_IN_PROFILE_ON_REGION, recommendation_id, Dat
         # get score of categorie :
         CATEGORIE_SCORE = getScore_CATEGORIE_byID(
             guest_id, recommendation_id, DataFrame_GuestCategorie, DataFrame_Recommendation)
-
+        print("Calculate Global scoring")
         MOY_SCORE = (BEHAVIOR_SCORE+LIKE_SCORE+TAG_SCORE+CATEGORIE_SCORE)/4
         LIST_OF_SCORE.append(MOY_SCORE)
     return max(LIST_OF_SCORE)
@@ -77,6 +77,7 @@ def get_big_score(LIST_IDs_OF_GUEST_IN_PROFILE_ON_REGION, recommendation_id, Dat
 def getScore_BEHAVIOR_byID(guest_id, recommendation_id, DataFrame_GuestReviewsScore):
     # No bugs
     # Score Data
+    print("calculate Behavior Scoring")
     NB_score = environement.SCORE_nbClickRecoCard + environement.SCORE_nbClickRecoMarker+environement.SCORE_nbClickRecoWebSite + \
         environement.SCORE_nbClickRecoDirection + \
         environement.SCORE_clickOnSliderPictures
@@ -111,9 +112,10 @@ def getScore_BEHAVIOR_byID(guest_id, recommendation_id, DataFrame_GuestReviewsSc
 
 
 def getScore_LIKE_byID(guest_id, recommendation_id, DataFrame_Recommendation):
+    print("calculate Likes Scoring")
     for index, row in DataFrame_Recommendation.iterrows():
         recommendationId = row['_id']
-        if (str(recommendationId) == str(recommendation_id)):
+        if (str(recommendationId) == str(recommendation_id) and 'bookingWhichLikes' in row.keys()):
             bookingWhichLikes = row['bookingWhichLikes']
             if(isinstance(bookingWhichLikes, list) and bookingWhichLikes != None):
                 for _id in bookingWhichLikes:
@@ -123,7 +125,7 @@ def getScore_LIKE_byID(guest_id, recommendation_id, DataFrame_Recommendation):
 
 
 def getScore_TAG_byID(guest_id, recommendation_id, DataFrame_GuestTags, DataFrame_Recommendation):
-    print('Get data is DONE !')
+    print("calculate Tags Scoring")
     for index, row_recommendation in DataFrame_Recommendation.iterrows():
         if(str(row_recommendation) == str(recommendation_id)):
             if 'tagIds' in row_recommendation.keys():
@@ -141,6 +143,7 @@ def getScore_TAG_byID(guest_id, recommendation_id, DataFrame_GuestTags, DataFram
 
 
 def getScore_CATEGORIE_byID(guest_id, recommendation_id, DataFrame_GuestCategorie, DataFrame_Recommendation):
+    print("calculate Categorie Scoring")
     for index, row_recommendation in DataFrame_Recommendation.iterrows():
         if(str(row_recommendation) == str(recommendation_id)):
             if 'category' in row_recommendation.keys():
