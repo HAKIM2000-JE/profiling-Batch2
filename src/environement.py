@@ -1,11 +1,11 @@
 # Data base params
-DATA_BASE_NAME = 'yaago-prod'
+DATA_BASE_NAME = 'yaago-prod-clone'
 
-URL_DATA_BASE = 'mongodb+srv://stage:password1234$@yaago-prod-cluster-pri.hq5rg.mongodb.net/yaago-prod?authSource=admin&replicaSet=atlas-i9ni26-shard-0&w=majority&readPreference=primary&appname=MongoDB%20Compass&retryWrites=true&ssl=true'
-#URL_DATA_BASE='mongodb://root:T8GRF2_uB4%2F%3FqCvq@149.202.107.243/?authSource=admin&readPreference=primary&ssl=false'
+#URL_DATA_BASE = 'mongodb+srv://stage:password1234$@yaago-prod-cluster-pri.hq5rg.mongodb.net/yaago-prod?authSource=admin&replicaSet=atlas-i9ni26-shard-0&w=majority&readPreference=primary&appname=MongoDB%20Compass&retryWrites=true&ssl=true'
+URL_DATA_BASE='mongodb://root:T8GRF2_uB4%2F%3FqCvq@149.202.107.243:29517/?authSource=admin&readPreference=primary&directConnection=true&ssl=false'
 
 
-BATCH_HOUR="11:05"
+BATCH_HOUR="02:28"
 NBR_CLUSTER= 5
 
 # Name of collection :
