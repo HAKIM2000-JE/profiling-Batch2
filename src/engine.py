@@ -20,16 +20,21 @@ def getProfileRecommendation(ListProfileId, CloseRecommendation):
 
     # get tags util in this region:
     List_tags_util = []
+    List_category_util = []
     for index, row in CloseRecommendation.iterrows():
+        # get tags util
         if ('tagIds' in row.keys()):
             tagIds = row['tagIds']
             for tag_id in tagIds:
                 if tag_id not in List_tags_util:
                     List_tags_util.append(tag_id)
 
-    # get list categorie utile :
+        if ('category' in row.keys()):
+            category = row['category']
+            if (category not in List_category_util and category != None):
+                List_category_util.append(category)
 
-        # get data
+    # get data
     DataFrame_Recommendation = CloseRecommendation
     DataFrame_GuestReviewsScore = ServiceData.get_guestReviews({"_id.recommendationId": {
         "$in": ListRecommendationsId}, "_id.guestId": {"$in": ListProfileId}})
